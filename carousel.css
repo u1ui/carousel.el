@@ -1,0 +1,41 @@
+/* slideshow */
+u1-carousel {
+	xoverflow:hidden;
+	/* custom
+	--u1-carousel-slideshow-speed:6s;
+	--u1-carousel-animation-speed:1s;
+	*/
+	display:flex;
+	overflow:auto;
+	scroll-snap-type: x mandatory;
+ 	/* if its a list */
+	list-style:none;
+	margin:0;
+	padding:0;
+	/* good default? */
+	text-align:center;
+	/* align-items:center or stretch;  todo default? */
+	/* xwidth:100%; needed? */
+}
+u1-carousel > * {
+	width:100%;
+	flex-shrink:0;
+	scroll-snap-align: center;
+	/* good default? */
+	padding:calc(var(--gap, 1rem) * 3);
+	/* position:relative; why? */
+	/* xmargin:0 !important; /* todo? */
+	/* box-sizing:border-box; not needed if using base.css */
+	/* ok? */
+	/* height:100%; /* vertical mode (needs height and flex-direction:column set on the slideshow) */
+	/*
+	todo?
+	display:flex;
+	align-items:center;
+	justify-content: center;
+	object-fit: cover;
+	*/
+}
+u1-carousel > img {
+	padding:0;
+}
