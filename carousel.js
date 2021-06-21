@@ -99,7 +99,6 @@ class u1Carousel extends HTMLElement {
 		<button part="control next" class="-arrow -next" aria-label="next slide" >${svg}</button>
         `;
 
-		this.mode = this.getAttribute('mode');
 		/*
 		var mode = this.getAttribute('mode');
 		if (!u1Carousel.mode[mode]) {
@@ -114,7 +113,11 @@ class u1Carousel extends HTMLElement {
 		setTimeout(()=>{ !this.active && this.next(); }); // this way i can add eventlistener that reacts to the change
 		this._nextDelayed = this._nextDelayed.bind(this);
 
+
 		this.slider = this.shadowRoot.querySelector('slot.body');
+
+		this.mode = this.getAttribute('mode');
+
 
 		var prev = this.shadowRoot.querySelector('.-prev');
 		var next = this.shadowRoot.querySelector('.-next');
