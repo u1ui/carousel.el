@@ -137,9 +137,12 @@ class u1Carousel extends HTMLElement {
 
 
 		if (this.active !== target) { // just trigger if not active
-			this.active && this.active.setAttribute('aria-hidden',true);
+			for (let child of this.children) {
+				child.setAttribute('aria-hidden', target !== child);
+			}
+			//this.active && this.active.setAttribute('aria-hidden',true);
 			this.active = target;
-			this.active.setAttribute('aria-hidden',false)
+			//this.active.setAttribute('aria-hidden',false)
 
 			target.dispatchEvent(new CustomEvent('u1-carousel.slide',{
 				bubbles:true,
