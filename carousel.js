@@ -131,8 +131,13 @@ class u1Carousel extends HTMLElement {
     slideTo(target){
 		if (typeof target === 'number') target = this.children[target]; // by index
 
+		if (Array.from(this.children).indexOf(target) === -1) {
+			console.error('target not a child of this slider!')
+		}
+
+
 		if (this.active !== target) { // just trigger if not active
-			this.active && this.active.setAttribute('aria-hidden',true)
+			this.active && this.active.setAttribute('aria-hidden',true);
 			this.active = target;
 			this.active.setAttribute('aria-hidden',false)
 
@@ -215,10 +220,10 @@ u1Carousel.mode.slide = {
 		//this.addSwipe();
 	},
 	slideTo:function(target){
-		requestAnimationFrame(()=>{
+		//requestAnimationFrame(()=>{
 			this.slider.style.transform = 'translateX(-'+(100*this.activeIndex())+'%)';
-			//this.scrollLeft = 0; // prevent "focus-scroll"
-		});
+			//this.scrollLeft = 0; // prevent "focus-scroll"?
+		//});
 	},
 }
 // fade (entirely done by css)
@@ -233,9 +238,9 @@ function hashchange(){
 	if (!location.hash) return;
 	var el = document.getElementById(location.hash.substr(1));
 	if (!el) return;
-	var sliderEl = el.closest('u1-carousel');
-	if (!sliderEl) return;
 	var slide = el.closest('u1-carousel > *');
+	if (!slide) return;
+	var sliderEl = slide.parentElement;
 	sliderEl.slideTo(slide);
 }
 addEventListener('DOMContentLoaded', hashchange);
@@ -243,11 +248,10 @@ addEventListener('hashchange', hashchange);
 // slide on focus
 addEventListener('focusin', e=>{
 	let el = document.activeElement;
-	if (!el) return;
-	var sliderEl = el.closest('u1-carousel');
-	if (!sliderEl) return;
+	//if (!el) return;
 	var slide = el.closest('u1-carousel > *');
 	if (!slide) return;
+	var sliderEl = slide.parentElement;
 	sliderEl.slideTo(slide);
 });
 // keyboard nav
