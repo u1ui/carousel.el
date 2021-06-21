@@ -1,4 +1,4 @@
-# <u1-carousel>
+# &lt;u1-carousel&gt;
 Carousel-Component
 
 # Features
