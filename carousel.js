@@ -4,20 +4,13 @@ class u1Carousel extends HTMLElement {
 		constructor() {
         super();
 
-        let shadowRoot = this.attachShadow({ mode: 'open' });
+        let shadowRoot = this.attachShadow({mode:'open'});
 
 		var svg = '<svg viewBox="0 0 9 18" width="9" height="18"><path d="M1 1l7 8-7 8"/></svg>';
 
         shadowRoot.innerHTML = `
         <style>
 			:host { position:relative; }
-			:host > button {
-				xposition:absolute;
-				xtop:0;
-				xbottom:0;
-				xleft:0;
-				xwidth:2rem;
-			}
 			:host .-arrow {
 				position: absolute;
 				padding:1rem;
@@ -51,7 +44,12 @@ class u1Carousel extends HTMLElement {
 
 			/* slide */
 			:host([mode=slide]) {
-				overflow:hidden !important; /* todo: important is too strong! what can i do to make just overwrite the css */
+				/*
+				todo: important is too strong! what can i do to make just overwrite the css
+				clip: prevent focus-scroll
+				*/
+				overflow:hidden !important;
+				overflow:clip !important;
 			}
 			:host([mode=slide]) > slot {
 				width:100%; /* needed bud why? */
@@ -95,8 +93,6 @@ class u1Carousel extends HTMLElement {
 		<button class="-arrow -next -ctrl" aria-label="next slide"     aria-controls="'+ss.slider.c1Id()+'">${svg}</button>
         `;
 
-		this.options = {animation_duration:1, play_interval:5};
-
 		var mode = this.getAttribute('mode');
 		if (!u1Carousel.mode[mode]) {
 			mode = 'slide'
@@ -121,7 +117,7 @@ class u1Carousel extends HTMLElement {
 
     }
 	static get observedAttributes() {
-		return ['play', 'mode'];
+		return ['play', 'mode', 'tabindex'];
 	}
 	attributeChangedCallback(name, oldValue, newValue) {
 		if (name === 'play') {
@@ -152,12 +148,9 @@ class u1Carousel extends HTMLElement {
 		}
         this.handler.slideTo && this.handler.slideTo.call(this, target);
     }
-    next(){
-       this.slideTo(this._sibling('next'));
-    }
-    prev(){
-        this.slideTo(this._sibling('prev'));
-    }
+    next(){ this.slideTo(this._sibling('next')); }
+    prev(){ this.slideTo(this._sibling('prev')); }
+
     _sibling(direction){
         var sibling = this.active || this.lastElementChild;
 		if (!sibling) return; // no slide
@@ -183,7 +176,7 @@ class u1Carousel extends HTMLElement {
     _nextDelayed(){
         clearTimeout(this._nextDelayedTimeout);
 
-		var speed = this.customProperty('slideshow-speed');
+		let speed = this.customProperty('slideshow-speed');
 		if (speed==='') speed = '6000';
 		var unit = speed.match(/[^0-9]*$/)[0];
 		speed = parseFloat(speed);
@@ -191,7 +184,6 @@ class u1Carousel extends HTMLElement {
 
 		this._nextDelayedTimeout = setTimeout(()=>{
 			if (this.contains(document.activeElement)) return;
-
             this.next();
 		},speed);
 	}
@@ -224,9 +216,8 @@ u1Carousel.mode.slide = {
 	},
 	slideTo:function(target){
 		requestAnimationFrame(()=>{
-			//this.style.overflow = 'hidden';
-			//this.slider.style.display = 'flex';
 			this.slider.style.transform = 'translateX(-'+(100*this.activeIndex())+'%)';
+			//this.scrollLeft = 0; // prevent "focus-scroll"
 		});
 	},
 }
@@ -234,11 +225,10 @@ u1Carousel.mode.slide = {
 u1Carousel.mode.fade = {}
 
 
-
 customElements.define('u1-carousel', u1Carousel)
 
 
-
+// slide on target
 function hashchange(){
 	if (!location.hash) return;
 	var el = document.getElementById(location.hash.substr(1));
@@ -250,8 +240,23 @@ function hashchange(){
 }
 addEventListener('DOMContentLoaded', hashchange);
 addEventListener('hashchange', hashchange);
-
-
+// slide on focus
+addEventListener('focusin', e=>{
+	let el = document.activeElement;
+	if (!el) return;
+	var sliderEl = el.closest('u1-carousel');
+	if (!sliderEl) return;
+	var slide = el.closest('u1-carousel > *');
+	if (!slide) return;
+	sliderEl.slideTo(slide);
+});
+// keyboard nav
+addEventListener('keydown', e=>{
+	const target = e.target;
+	if (target.tagName !== 'U1-CAROUSEL') return;
+	if (e.code === 'ArrowRight') target.next();
+	if (e.code === 'ArrowLeft') target.prev();
+});
 
 
 
