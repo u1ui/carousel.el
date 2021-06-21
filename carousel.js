@@ -41,6 +41,9 @@ class u1Carousel extends HTMLElement {
 			:host([item-count="0"]) > .-arrow, :host([item-count="1"]) > .-arrow {
 				display:none;
 			}
+			:host > slot.body {
+				zzz_position:relative;
+			}
 
 			/* slide */
 			:host([mode=slide]) {
@@ -51,7 +54,7 @@ class u1Carousel extends HTMLElement {
 				overflow:hidden !important;
 				overflow:clip !important;
 			}
-			:host([mode=slide]) > slot {
+			:host([mode=slide]) > slot.body {
 				width:100%; /* needed bud why? */
 				display:flex;
 				will-change: transform;
@@ -62,7 +65,7 @@ class u1Carousel extends HTMLElement {
 			:host([mode=scroll]) {
 				overflow:visible !important;
 			}
-			:host([mode=scroll]) > slot {
+			:host([mode=scroll]) > slot.body {
 				display:flex;
 				overflow:hidden !important;
 			}
@@ -71,6 +74,9 @@ class u1Carousel extends HTMLElement {
 				display:flex !important;
 				z-index:0;
 				overflow: visible !important;
+			}
+			:host([mode=fade]) > slot.body {
+				display:flex;
 			}
 			:host([mode=fade]) ::slotted(*) {
 				transition:opacity var(--u1-carousel-animation-speed, 1s) ease-in-out;
@@ -88,11 +94,13 @@ class u1Carousel extends HTMLElement {
 				z-index:1;
 			}
 		</style>
-		<button class="-arrow -prev -ctrl" aria-label="previous slide" aria-controls="'+ss.slider.c1Id()+'">${svg}</button>
-        <slot></slot>
-		<button class="-arrow -next -ctrl" aria-label="next slide"     aria-controls="'+ss.slider.c1Id()+'">${svg}</button>
+		<button part="control prev" class="-arrow -prev" aria-label="previous slide">${svg}</button>
+        <slot class=body></slot>
+		<button part="control next" class="-arrow -next" aria-label="next slide" >${svg}</button>
         `;
 
+		this.mode = this.getAttribute('mode');
+		/*
 		var mode = this.getAttribute('mode');
 		if (!u1Carousel.mode[mode]) {
 			mode = 'slide'
@@ -100,15 +108,13 @@ class u1Carousel extends HTMLElement {
 		}
 		this.handler = u1Carousel.mode[mode];
 		this.handler.init && this.handler.init.call(this);
+		this.dispatchEvent(new CustomEvent('u1-carousel.init',{bubbles:true}));
+		*/
 
-		this.dispatchEvent(new CustomEvent('u1-carousel.init',{
-			bubbles:true,
-			detail:{slider:this}
-		}));
 		setTimeout(()=>{ !this.active && this.next(); }); // this way i can add eventlistener that reacts to the change
 		this._nextDelayed = this._nextDelayed.bind(this);
 
-		this.slider = this.shadowRoot.querySelector('slot');
+		this.slider = this.shadowRoot.querySelector('slot.body');
 
 		var prev = this.shadowRoot.querySelector('.-prev');
 		var next = this.shadowRoot.querySelector('.-next');
@@ -124,6 +130,18 @@ class u1Carousel extends HTMLElement {
 			let play = this.hasAttribute('play');
 			this[play?'play':'stop']();
 		}
+		if (name === 'mode') {
+			this.mode = newValue;
+		}
+	}
+	set mode(mode){
+		if (!u1Carousel.mode[mode]) mode = 'slide';
+		this.handler = u1Carousel.mode[mode];
+		this.handler.init && this.handler.init.call(this);
+		//this.dispatchEvent(new CustomEvent('u1-carousel.init',{bubbles:true}));
+	}
+	get mode(){
+		return this.getAttribute('mode')
 	}
 	activeIndex(){
 		return Array.prototype.indexOf.call(this.children, this.active);
@@ -209,13 +227,22 @@ u1Carousel.mode = {};
 // scroll
 u1Carousel.mode.scroll = {
     slideTo:function(target){
-        //target.scrollIntoView({behavior:'smooth', zzzblock:'end'});
-		this.slider.scroll({ // todo: test: items-padding
+		//target.scrollIntoView({behavior:'smooth', inline:'center', block: 'nearest'}); /* -safari, scrolls not only the carousel-viewport */
+		let left = target.offsetLeft - this.slider.offsetLeft;
+		/* todo?
+		let sliderCenter = this.slider.offsetWidth / 2;
+		let targetCenter = target.offsetWidth / 2;
+		let left = target.offsetLeft - (sliderCenter - targetCenter) - this.slider.offsetLeft;
+		*/
+		this.slider.scroll({ // todo: better calculation of offset
 			top: target.offsetTop,
-			left: target.offsetLeft,
+			left: left,
 			behavior: 'smooth'
 		});
-    }
+	},
+	init:function(){
+		this.slider.style.transform = ''; // if changed from mode=slide
+	}
 }
 // slide
 u1Carousel.mode.slide = {
@@ -230,7 +257,11 @@ u1Carousel.mode.slide = {
 	},
 }
 // fade (entirely done by css)
-u1Carousel.mode.fade = {}
+u1Carousel.mode.fade = {
+	init:function(){
+		this.slider.style.transform = ''; // if changed from mode=slide
+	}
+}
 
 
 customElements.define('u1-carousel', u1Carousel)
