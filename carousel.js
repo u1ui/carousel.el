@@ -28,6 +28,7 @@ class u1Carousel extends HTMLElement {
 				stroke-linejoin:round;
 				stroke-linecap:round;
 				stroke-width:.1rem;
+				box-sizing:content-box;
 			}
 			:host .-prev { left: 0; }
 			:host .-next { right: 0; }
@@ -35,7 +36,7 @@ class u1Carousel extends HTMLElement {
 			:host > .-arrow svg {
 				fill:none;
 				flex:1 1 auto;
-				xheight: auto; /* needed? */
+				height: auto;
 				stroke:currentColor;
 				xstroke-linejoin:round; /* moved to ::part(control) so it inherits */
 				xstroke-linecap:round; /* same */
