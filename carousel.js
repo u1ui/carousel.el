@@ -24,6 +24,7 @@ class u1Carousel extends HTMLElement {
 				width:auto;
 				z-index: 1;
 				align-items: center;
+				flex:0 1 auto; /* grow if controls are static */
 			}
 			:host .-prev { left: 0; }
 			:host .-next { right: 0; }
@@ -31,9 +32,9 @@ class u1Carousel extends HTMLElement {
 			:host > .-arrow svg {
 				fill:none;
 				stroke:currentColor;
-				stroke-linejoin:round;
-				stroke-linecap:round;
-				stroke-width:.1rem;
+				xstroke-linejoin:round; /* removed, need to inherit */
+				xstroke-linecap:round; /* same */
+				xstroke-width:.1rem; /* same */
 			}
 			:host > .-prev svg {
 				transform:rotate(180deg);
@@ -42,7 +43,7 @@ class u1Carousel extends HTMLElement {
 				display:none;
 			}
 			:host > slot.body {
-				zzz_position:relative;
+				flex:1 1 auto; /* grow if controls are static */
 			}
 
 			/* slide */
