@@ -25,14 +25,19 @@ class u1Carousel extends HTMLElement {
 				z-index: 1;
 				align-items: center;
 				flex:0 1 auto; /* grow if controls are static */
+				stroke-linejoin:round;
+				stroke-linecap:round;
+				stroke-width:.1rem;
 			}
 			:host .-prev { left: 0; }
 			:host .-next { right: 0; }
 
 			:host > .-arrow svg {
 				fill:none;
+				flex:1 1 auto;
+				xheight: auto; /* needed? */
 				stroke:currentColor;
-				xstroke-linejoin:round; /* removed, need to inherit */
+				xstroke-linejoin:round; /* moved to ::part(control) so it inherits */
 				xstroke-linecap:round; /* same */
 				xstroke-width:.1rem; /* same */
 			}
@@ -148,7 +153,7 @@ class u1Carousel extends HTMLElement {
 		return this.getAttribute('mode')
 	}
 	activeIndex(){
-		return Array.prototype.indexOf.call(this.children, this.active);
+		return Array.prototype.indexOf.call(this.children, this.active); // todo: use assignedElements ?
 	}
     slideTo(target){
 		if (typeof target === 'number') target = this.children[target]; // by index
