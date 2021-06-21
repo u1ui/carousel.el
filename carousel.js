@@ -24,7 +24,7 @@ class u1Carousel extends HTMLElement {
 				width:auto;
 				z-index: 1;
 				align-items: center;
-				flex:0 1 auto; /* grow if controls are static */
+				flex:0 0 auto; /* grow if controls are static */
 				stroke-linejoin:round;
 				stroke-linecap:round;
 				stroke-width:.1rem;
@@ -65,7 +65,7 @@ class u1Carousel extends HTMLElement {
 				width:100%; /* needed bud why? */
 				display:flex;
 				will-change: transform;
-				transition: transform var(--u1-carousel-animation-speed, 1s) ease-out;
+				transition: transform var(--u1-carousel-animation-speed, .7s) ease-out;
 				overflow: visible;
 			}
 			/* scroll */
@@ -86,7 +86,7 @@ class u1Carousel extends HTMLElement {
 				display:flex;
 			}
 			:host([mode=fade]) ::slotted(*) {
-				transition:opacity var(--u1-carousel-animation-speed, 1s) ease-in-out;
+				transition:opacity var(--u1-carousel-animation-speed, .7s) ease-in-out;
 				opacity:0;
 				margin-left:-100% !important;
 			}
