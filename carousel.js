@@ -1,4 +1,4 @@
-
+// todo add privet fields
 /* element */
 class u1Carousel extends HTMLElement {
 		constructor() {
@@ -136,6 +136,7 @@ class u1Carousel extends HTMLElement {
 		return ['play', 'mode', 'tabindex'];
 	}
 	attributeChangedCallback(name, oldValue, newValue) {
+		if (oldValue === newValue) return;
 		if (name === 'play') {
 			let play = this.hasAttribute('play');
 			this[play?'play':'stop']();
@@ -146,9 +147,9 @@ class u1Carousel extends HTMLElement {
 	}
 	set mode(mode){
 		if (!u1Carousel.mode[mode]) mode = 'slide';
+		this.setAttribute('mode', mode);
 		this.handler = u1Carousel.mode[mode];
 		this.handler.init && this.handler.init.call(this);
-		//this.dispatchEvent(new CustomEvent('u1-carousel.init',{bubbles:true}));
 	}
 	get mode(){
 		return this.getAttribute('mode')
@@ -168,14 +169,11 @@ class u1Carousel extends HTMLElement {
 			for (let child of this.children) {
 				child.setAttribute('aria-hidden', target !== child);
 			}
-			//this.active && this.active.setAttribute('aria-hidden',true);
 			this.active = target;
-			//this.active.setAttribute('aria-hidden',false)
 
 			target.dispatchEvent(new CustomEvent('u1-carousel.slide',{
 				bubbles:true,
 				detail:{
-					//old:old,
 					slide:target,
 					index:Array.prototype.indexOf.call(this.children, target),
 					slider:this,
