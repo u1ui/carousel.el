@@ -33,12 +33,12 @@ c1.onElement('u1-carousel-nav',{immediate:function(el){
 		var button = document.createElement('button');
 		button.addEventListener('click',function(){
 			firstSS.slider.slideTo(index)
-		})
+		});
 		el.append(button);
 	});
 	firstSS.addEventListener('u1-carousel.slide',function(e){
 		Array.from(el.children).forEach(function(button, index){
 			button.classList.toggle('-active', e.detail.index === index);
-		})
+		});
 	});
 }});

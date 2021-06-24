@@ -10,7 +10,10 @@ class u1Carousel extends HTMLElement {
 
         shadowRoot.innerHTML = `
         <style>
-			:host { position:relative; }
+			:host {
+				position:relative;
+				contain: layout;
+			}
 			:host .-arrow {
 				position: absolute;
 				padding:1rem;
@@ -29,6 +32,7 @@ class u1Carousel extends HTMLElement {
 				stroke-linecap:round;
 				stroke-width:.1rem;
 				box-sizing:content-box;
+				contain:layout;
 			}
 			:host .-prev { left: 0; }
 			:host .-next { right: 0; }
@@ -64,8 +68,8 @@ class u1Carousel extends HTMLElement {
 			:host([mode=slide]) > slot.body {
 				width:100%; /* needed bud why? */
 				display:flex;
-				will-change: transform;
 				transition: transform var(--u1-carousel-animation-speed, .7s) ease-out;
+				will-change: transform;
 				overflow: visible;
 			}
 			/* scroll */
@@ -87,6 +91,7 @@ class u1Carousel extends HTMLElement {
 			}
 			:host([mode=fade]) ::slotted(*) {
 				transition:opacity var(--u1-carousel-animation-speed, .7s) ease-in-out;
+				will-change: opacity;
 				opacity:0;
 				margin-left:-100% !important;
 			}
