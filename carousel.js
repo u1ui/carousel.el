@@ -42,9 +42,6 @@ class u1Carousel extends HTMLElement {
 				flex:1 1 auto;
 				height: auto;
 				stroke:currentColor;
-				xstroke-linejoin:round; /* moved to ::part(control) so it inherits */
-				xstroke-linecap:round; /* same */
-				xstroke-width:.1rem; /* same */
 			}
 			:host > .-prev svg {
 				transform:rotate(180deg);
@@ -302,11 +299,10 @@ addEventListener('focusin', e=>{
 	sliderEl.slideTo(slide);
 });
 // keyboard nav
-addEventListener('keydown', e=>{
-	const target = e.target;
+addEventListener('keydown', ({target,code})=>{
 	if (target.tagName !== 'U1-CAROUSEL') return;
-	if (e.code === 'ArrowRight') target.next();
-	if (e.code === 'ArrowLeft') target.prev();
+	if (code === 'ArrowRight') target.next();
+	if (code === 'ArrowLeft')  target.prev();
 });
 
 
