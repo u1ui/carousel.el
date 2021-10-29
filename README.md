@@ -19,11 +19,9 @@ Carousel-Component
 <script src="../carousel.js" type=module></script>
 
 <u1-carousel mode=slide play style="--u1-carousel-slideshow-speed:2s" tabindex="0">
-    <div>
-        <h2 slot="title">My cute cats</h2>
-    </div>
     <img src="myCat.jpg">
     <img src="myCat2.jpg">
+    <img src="myCat3.jpg">
 </u1-carousel>
 ```
 
