@@ -17,7 +17,7 @@ u1-carousel {
 	/* align-items:center or stretch;  todo default? */
 	/* xwidth:100%; needed? */
 }
-u1-carousel > * {
+u1-carousel > :not([slot]) {
 	width:100%;
 	flex-shrink:0;
 	scroll-snap-align: center;
@@ -36,6 +36,12 @@ u1-carousel > * {
 	object-fit: cover;
 	*/
 }
-u1-carousel > img {
+/*
+todo: until js is loaded
+u1-carousel > [slot] {
+	display:none;
+}
+*/
+u1-carousel > img:not([xyz]) { /* just make it stronger*/
 	padding:0;
 }

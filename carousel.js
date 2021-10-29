@@ -53,6 +53,9 @@ class u1Carousel extends HTMLElement {
 			:host > slot.body {
 				flex:1 1 auto; /* grow if controls are static */
 			}
+			::slotted([name=prev]) {
+				display:block;
+			}
 
 			/* slide */
 			:host([mode=slide]) {
@@ -104,9 +107,13 @@ class u1Carousel extends HTMLElement {
 				z-index:1;
 			}
 		</style>
-		<button part="control prev" class="-arrow -prev" aria-label="previous slide">${svg}</button>
-        <slot class=body>test</slot>
-		<button part="control next" class="-arrow -next" aria-label="next slide" >${svg}</button>
+		<button part="control prev" class="-arrow -prev" aria-label="previous slide">
+			<slot name=prev>${svg}</slot>
+		</button>
+        <slot class=body></slot>
+		<button part="control next" class="-arrow -next" aria-label="next slide">
+			<slot name=next>${svg}</slot>
+		</button>
         `;
 
 		/*
@@ -157,19 +164,26 @@ class u1Carousel extends HTMLElement {
 	get mode(){
 		return this.getAttribute('mode')
 	}
+	_items(){
+		return this.slider.assignedElements({flatten:true});
+	}
 	activeIndex(){
-		return Array.prototype.indexOf.call(this.children, this.active); // todo: use assignedElements ?
+		return Array.prototype.indexOf.call(this._items(), this.active);
+//		return Array.prototype.indexOf.call(this.children, this.active); // todo: use assignedElements ?
 	}
     slideTo(target){
-		if (typeof target === 'number') target = this.children[target]; // by index
+//		if (typeof target === 'number') target = this.children[target]; // by index
+		if (typeof target === 'number') target = this._items()[target]; // by index
 
-		if (Array.from(this.children).indexOf(target) === -1) {
+//		if (Array.from(this.children).indexOf(target) === -1) {
+		if (Array.from(this._items()).indexOf(target) === -1) {
 			console.error('target not a child of this slider!')
 		}
 
 
 		if (this.active !== target) { // just trigger if not active
-			for (let child of this.children) {
+//			for (let child of this.children) {
+			for (let child of this._items()) {
 				child.setAttribute('aria-hidden', target !== child);
 			}
 			this.active = target;
@@ -178,7 +192,8 @@ class u1Carousel extends HTMLElement {
 				bubbles:true,
 				detail:{
 					slide:target,
-					index:Array.prototype.indexOf.call(this.children, target),
+					index:Array.prototype.indexOf.call(this._items(), target),
+//					index:Array.prototype.indexOf.call(this.children, target),
 					slider:this,
 				}
 			}));
@@ -189,12 +204,17 @@ class u1Carousel extends HTMLElement {
     prev(){ this.slideTo(this._sibling('prev')); }
 
     _sibling(direction){
-        var sibling = this.active || this.lastElementChild;
+		const items = this._items();
+//        var sibling = this.active || this.lastElementChild;
+        var sibling = this.active || items.at(-1);
+		const index = this.activeIndex();
 		if (!sibling) return; // no slide
         while (1) {
             var sibling = direction === 'prev'
-                ? sibling.previousElementSibling || this.lastElementChild
-                : sibling.nextElementSibling     || this.firstElementChild;
+//				? sibling.previousElementSibling || this.lastElementChild
+//				: sibling.nextElementSibling     || this.firstElementChild;
+				? items[index-1] || items.at(-1)
+                : items[index+1] || items.at(0);
 			break; // also hidden
             // if (sibling.offsetParent) break; // next visible // can cause infinite loops!!
             if (sibling === this.active) break; // only one
@@ -229,7 +249,8 @@ class u1Carousel extends HTMLElement {
 	}
 	connectedCallback() {
 		this.hasAttribute('play') && this.play();
-		this.setAttribute('item-count', this.children.length); // todo, dynamic react on dynamic added slides, mutation observer?
+//		this.setAttribute('item-count', this.children.length); // todo, dynamic react on dynamic added slides, mutation observer?
+		this.setAttribute('item-count', this._items().length); // todo, dynamic react on dynamic added slides, mutation observer?
     }
 }
 
