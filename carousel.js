@@ -105,7 +105,7 @@ class u1Carousel extends HTMLElement {
 			}
 		</style>
 		<button part="control prev" class="-arrow -prev" aria-label="previous slide">${svg}</button>
-        <slot class=body></slot>
+        <slot class=body>test</slot>
 		<button part="control next" class="-arrow -next" aria-label="next slide" >${svg}</button>
         `;
 
