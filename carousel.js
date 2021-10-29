@@ -42,6 +42,7 @@ class u1Carousel extends HTMLElement {
 				flex:1 1 auto;
 				height: auto;
 				stroke:currentColor;
+				max-height:100%;
 			}
 			:host > .-prev svg {
 				transform:rotate(180deg);
