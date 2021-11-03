@@ -169,20 +169,16 @@ class u1Carousel extends HTMLElement {
 	}
 	activeIndex(){
 		return Array.prototype.indexOf.call(this._items(), this.active);
-//		return Array.prototype.indexOf.call(this.children, this.active); // todo: use assignedElements ?
 	}
     slideTo(target){
-//		if (typeof target === 'number') target = this.children[target]; // by index
 		if (typeof target === 'number') target = this._items()[target]; // by index
 
-//		if (Array.from(this.children).indexOf(target) === -1) {
 		if (Array.from(this._items()).indexOf(target) === -1) {
 			console.error('target not a child of this slider!')
 		}
 
 
 		if (this.active !== target) { // just trigger if not active
-//			for (let child of this.children) {
 			for (let child of this._items()) {
 				child.setAttribute('aria-hidden', target !== child);
 			}
@@ -193,7 +189,6 @@ class u1Carousel extends HTMLElement {
 				detail:{
 					slide:target,
 					index:Array.prototype.indexOf.call(this._items(), target),
-//					index:Array.prototype.indexOf.call(this.children, target),
 					slider:this,
 				}
 			}));
@@ -205,14 +200,11 @@ class u1Carousel extends HTMLElement {
 
     _sibling(direction){
 		const items = this._items();
-//        var sibling = this.active || this.lastElementChild;
         var sibling = this.active || items.at(-1);
 		const index = this.activeIndex();
 		if (!sibling) return; // no slide
         while (1) {
             var sibling = direction === 'prev'
-//				? sibling.previousElementSibling || this.lastElementChild
-//				: sibling.nextElementSibling     || this.firstElementChild;
 				? items[index-1] || items.at(-1)
                 : items[index+1] || items.at(0);
 			break; // also hidden
@@ -249,7 +241,6 @@ class u1Carousel extends HTMLElement {
 	}
 	connectedCallback() {
 		this.hasAttribute('play') && this.play();
-//		this.setAttribute('item-count', this.children.length); // todo, dynamic react on dynamic added slides, mutation observer?
 		this.setAttribute('item-count', this._items().length); // todo, dynamic react on dynamic added slides, mutation observer?
     }
 }
