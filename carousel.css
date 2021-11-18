@@ -13,7 +13,7 @@ u1-carousel {
 	margin:0;
 	padding:0;
 	/* good default? */
-	text-align:center;
+	/* text-align:center; */
 	/* align-items:center or stretch;  todo default? */
 	/* xwidth:100%; needed? */
 }
