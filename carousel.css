@@ -1,4 +1,6 @@
-/* slideshow */
+/* slideshow
+inspiration: https://codepen.io/argyleink/pen/yLovWjz?editors=1100
+*/
 u1-carousel {
 	xoverflow:hidden;
 	/* custom
@@ -21,7 +23,7 @@ u1-carousel > :not([slot]) {
 	width:100%;
 	flex-shrink:0;
 	scroll-snap-align: center;
-	/* good default? */
+	/* good default? *
 	padding:calc(var(--gap, 1rem) * 3);
 	/* position:relative; why? */
 	/* xmargin:0 !important; /* todo? */
@@ -41,7 +43,9 @@ todo: until js is loaded
 u1-carousel > [slot] {
 	display:none;
 }
-*/
-u1-carousel > img:not([xyz]) { /* just make it stronger*/
+
+/* needed if padding
+u1-carousel > img:not([xyz]) { /* just make it stronger
 	padding:0;
 }
+*/
