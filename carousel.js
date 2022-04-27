@@ -79,30 +79,35 @@ class u1Carousel extends HTMLElement {
 			}
 			:host([mode=scroll]) > slot.body {
 				display:flex;
-				overflow:hidden !important;
+				/* overflow:hidden !important; */
+
+				overflow:auto !important;
+				scroll-snap-type: x mandatory;
+				scrollbar-width: none;  /* Firefox */
 			}
+			:host([mode=scroll]) > slot.body::-webkit-scrollbar {
+				display: none;  /* Safari and Chrome */
+			}
+
 			/* fade */
 			:host([mode=fade]) {
 				display:flex !important;
 				z-index:0;
 				overflow: visible !important;
 			}
-			:host([mode=fade]) > slot.body {
+			:host([mode=fade]) .body {
 				display:flex;
 			}
-			:host([mode=fade]) ::slotted(*) {
+			:host([mode=fade]) .body::slotted(*) {
 				transition:opacity var(--u1-carousel-animation-speed, .7s) ease-in-out;
 				will-change: opacity;
 				opacity:0;
 				margin-left:-100% !important;
 			}
-			:host([mode=fade]) ::slotted(:first-child)  {
+			:host([mode=fade]) .body::slotted(:first-child)  {
 				margin-left:0 !important;
 			}
-			:host([mode=fade]) > slot > :first-child {
-				margin-left:0 !important;
-			}
-			:host([mode=fade]) ::slotted([aria-hidden=false]) {
+			:host([mode=fade]) .body::slotted([aria-hidden=false]) {
 				opacity:1;
 				z-index:1;
 			}
@@ -247,6 +252,7 @@ class u1Carousel extends HTMLElement {
 
 
 u1Carousel.mode = {};
+
 // scroll
 u1Carousel.mode.scroll = {
     slideTo:function(target){
@@ -265,8 +271,18 @@ u1Carousel.mode.scroll = {
 	},
 	init:function(){
 		this.slider.style.transform = ''; // if changed from mode=slide
+
+		/*
+		this.slider.addEventListener('scroll',()=>{
+			clearTimeout(this.scroll_sliding_timeout);
+			this.scroll_slideing_timeout = setTimeout(()=>{
+				this.slideTo(this._items().at(this.activeIndex()));
+			},300)
+		});
+		*/
 	}
 }
+
 // slide
 u1Carousel.mode.slide = {
 	init:function(){
