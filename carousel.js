@@ -198,7 +198,7 @@ class u1Carousel extends HTMLElement {
 				}
 			}));
 		}
-        this.handler.slideTo && this.handler.slideTo.call(this, target);
+        this.handler.slideTo && this.handler.slideTo.call(this, target); // needed if not active?
     }
     next(){ this.slideTo(this._sibling('next')); }
     prev(){ this.slideTo(this._sibling('prev')); }
@@ -272,14 +272,20 @@ u1Carousel.mode.scroll = {
 	init:function(){
 		this.slider.style.transform = ''; // if changed from mode=slide
 
-		/*
+		// trigger on manual scroll
 		this.slider.addEventListener('scroll',()=>{
-			clearTimeout(this.scroll_sliding_timeout);
+			clearTimeout(this.scroll_slideing_timeout);
 			this.scroll_slideing_timeout = setTimeout(()=>{
-				this.slideTo(this._items().at(this.activeIndex()));
-			},300)
+				const rect = this.slider.getBoundingClientRect();
+				const targets = document.elementsFromPoint(rect.left + rect.width/2, rect.top + rect.height/2);
+				for (let target of targets) {
+					if (target.parentElement === this) {
+						if (target !== this.active) this.slideTo(target);
+						break;
+					}
+				}
+			},100)
 		});
-		*/
 	}
 }
 
