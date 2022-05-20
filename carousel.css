@@ -23,7 +23,7 @@ u1-carousel > :not([slot]) {
 	flex-shrink:0;
 	scroll-snap-align: center;
 	/* good default? *
-	padding:calc(var(--gap, 1rem) * 3);
+	padding:3rem;
 	/* position:relative; why? */
 	/* xmargin:0 !important; /* todo? */
 	/* box-sizing:border-box; not needed if using base.css */
