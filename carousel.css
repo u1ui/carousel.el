@@ -12,7 +12,7 @@ u1-carousel {
  	/* if its a list */
 	list-style:none;
 	margin:0;
-	padding:0;
+	padding:0; /*  todo?: !important, always set padding on children */
 	/* good default? */
 	/* text-align:center; */
 	/* align-items:center or stretch;  todo default? */
