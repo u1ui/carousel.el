@@ -27,6 +27,7 @@ Carousel-Component
 
 ## Demos
 https://raw.githack.com/u1ui/carousel.el/main/tests/experiments.html  
+https://raw.githack.com/u1ui/carousel.el/main/tests/minimal.html  
 https://raw.githack.com/u1ui/carousel.el/main/tests/nested.html  
 https://raw.githack.com/u1ui/carousel.el/main/tests/test.html  
 
