@@ -20,6 +20,12 @@ u1-carousel {
 }
 u1-carousel > :not([slot]) {
 	width:100%;
+	/* so that margins can be used? test!
+    width:-moz-available;
+    width:-webkit-fill-available;
+    width:stretch;
+	*/
+
 	flex-shrink:0;
 	scroll-snap-align: center;
 	/* good default? *
