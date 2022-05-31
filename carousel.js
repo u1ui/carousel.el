@@ -148,7 +148,7 @@ class u1Carousel extends HTMLElement {
 
     }
 	static get observedAttributes() {
-		return ['play', 'mode', 'tabindex'];
+		return ['play', 'mode'/*, 'tabindex'*/];
 	}
 	attributeChangedCallback(name, oldValue, newValue) {
 		if (oldValue === newValue) return;
