@@ -2,14 +2,14 @@
 /* element */
 class u1Carousel extends HTMLElement {
 		constructor() {
-        super();
+		super();
 
-        let shadowRoot = this.attachShadow({mode:'open'});
+		let shadowRoot = this.attachShadow({mode:'open'});
 
 		var svg = '<svg viewBox="0 0 9 18" width="9" height="18"><path d="M1 1l7 8-7 8"/></svg>';
 
-        shadowRoot.innerHTML = `
-        <style>
+		shadowRoot.innerHTML = `
+		<style>
 			:host {
 				position:relative;
 				contain: layout;
@@ -79,8 +79,6 @@ class u1Carousel extends HTMLElement {
 			}
 			:host([mode=scroll]) > slot.body {
 				display:flex;
-				/* overflow:hidden !important; */
-
 				overflow:auto !important;
 				scroll-snap-type: x mandatory;
 				scrollbar-width: none;  /* Firefox */
@@ -115,22 +113,11 @@ class u1Carousel extends HTMLElement {
 		<button part="control prev" class="-arrow -prev" aria-label="previous slide">
 			<slot name=prev>${svg}</slot>
 		</button>
-        <slot class=body></slot>
+		<slot class=body></slot>
 		<button part="control next" class="-arrow -next" aria-label="next slide">
 			<slot name=next>${svg}</slot>
 		</button>
-        `;
-
-		/*
-		var mode = this.getAttribute('mode');
-		if (!u1Carousel.mode[mode]) {
-			mode = 'slide'
-			this.setAttribute('mode','slide');
-		}
-		this.handler = u1Carousel.mode[mode];
-		this.handler.init && this.handler.init.call(this);
-		this.dispatchEvent(new CustomEvent('u1-carousel.init',{bubbles:true}));
-		*/
+		`;
 
 		setTimeout(()=>{ !this.active && this.next(); }); // this way i can add eventlistener that reacts to the change
 		this._nextDelayed = this._nextDelayed.bind(this);
@@ -140,13 +127,12 @@ class u1Carousel extends HTMLElement {
 
 		this.mode = this.getAttribute('mode');
 
-
 		var prev = this.shadowRoot.querySelector('.-prev');
 		var next = this.shadowRoot.querySelector('.-next');
 		next.addEventListener('click',()=>this.next());
 		prev.addEventListener('click',()=>this.prev());
 
-    }
+	}
 	static get observedAttributes() {
 		return ['play', 'mode'/*, 'tabindex'*/];
 	}
@@ -175,13 +161,10 @@ class u1Carousel extends HTMLElement {
 	activeIndex(){
 		return Array.prototype.indexOf.call(this._items(), this.active);
 	}
-    slideTo(target){
+	slideTo(target){
 		if (typeof target === 'number') target = this._items()[target]; // by index
 
-		if (Array.from(this._items()).indexOf(target) === -1) {
-			console.error('target not a child of this slider!')
-		}
-
+		if (Array.from(this._items()).indexOf(target) === -1) console.error('target not a child of this slider!')
 
 		if (this.active !== target) { // just trigger if not active
 			for (let child of this._items()) {
@@ -198,37 +181,36 @@ class u1Carousel extends HTMLElement {
 				}
 			}));
 		}
-        this.handler.slideTo && this.handler.slideTo.call(this, target); // needed if not active?
-    }
-    next(){ this.slideTo(this._sibling('next')); }
-    prev(){ this.slideTo(this._sibling('prev')); }
+		this.handler.slideTo && this.handler.slideTo.call(this, target); // needed if not active?
+	}
+	next(){ this.slideTo(this._sibling('next')); }
+	prev(){ this.slideTo(this._sibling('prev')); }
 
-    _sibling(direction){
+	_sibling(direction){
 		const items = this._items();
-        var sibling = this.active || items.at(-1);
+		var sibling = this.active || items.at(-1);
 		const index = this.activeIndex();
 		if (!sibling) return; // no slide
-        while (1) {
-            var sibling = direction === 'prev'
+		while (1) {
+			var sibling = direction === 'prev'
 				? items[index-1] || items.at(-1)
-                : items[index+1] || items.at(0);
+				: items[index+1] || items.at(0);
 			break; // also hidden
-            // if (sibling.offsetParent) break; // next visible // can cause infinite loops!!
-            if (sibling === this.active) break; // only one
-        }
-        return sibling;
-    }
-    // auto play
-    play(){
+			// if (sibling.offsetParent) break; // next visible // can cause infinite loops!!
+			if (sibling === this.active) break; // only one
+		}
+		return sibling;
+	}
+	play(){
 		this.addEventListener('u1-carousel.slide', this._nextDelayed);
-        this._nextDelayed();
-    }
-    stop(){
+		this._nextDelayed();
+	}
+	stop(){
 		this.removeEventListener('u1-carousel.slide', this._nextDelayed)
-        clearTimeout(this._nextDelayedTimeout);
-    }
-    _nextDelayed(){
-        clearTimeout(this._nextDelayedTimeout);
+		clearTimeout(this._nextDelayedTimeout);
+	}
+	_nextDelayed(){
+		clearTimeout(this._nextDelayedTimeout);
 
 		let speed = this.customProperty('slideshow-speed');
 		if (speed==='') speed = '6000';
@@ -238,7 +220,7 @@ class u1Carousel extends HTMLElement {
 
 		this._nextDelayedTimeout = setTimeout(()=>{
 			if (this.contains(document.activeElement)) return;
-            this.next();
+			this.next();
 		},speed);
 	}
 	customProperty(property){
@@ -247,7 +229,7 @@ class u1Carousel extends HTMLElement {
 	connectedCallback() {
 		this.hasAttribute('play') && this.play();
 		this.setAttribute('item-count', this._items().length); // todo, dynamic react on dynamic added slides, mutation observer?
-    }
+	}
 }
 
 
@@ -255,14 +237,8 @@ u1Carousel.mode = {};
 
 // scroll
 u1Carousel.mode.scroll = {
-    slideTo:function(target){
-		//target.scrollIntoView({behavior:'smooth', inline:'center', block: 'nearest'}); /* -safari, scrolls not only the carousel-viewport */
+	slideTo:function(target){
 		let left = target.offsetLeft - this.slider.offsetLeft;
-		/* todo?
-		let sliderCenter = this.slider.offsetWidth / 2;
-		let targetCenter = target.offsetWidth / 2;
-		let left = target.offsetLeft - (sliderCenter - targetCenter) - this.slider.offsetLeft;
-		*/
 		this.slider.scroll({ // todo: better calculation of offset
 			top: target.offsetTop,
 			left: left,
@@ -272,8 +248,7 @@ u1Carousel.mode.scroll = {
 	init:function(){
 		this.slider.style.transform = ''; // if changed from mode=slide
 
-		// trigger on manual scroll
-		this.slider.addEventListener('scroll',()=>{
+		this.slider.addEventListener('scroll',()=>{ // trigger on manual scroll
 			clearTimeout(this.scroll_slideing_timeout);
 			this.scroll_slideing_timeout = setTimeout(()=>{
 				const rect = this.slider.getBoundingClientRect();
@@ -295,10 +270,7 @@ u1Carousel.mode.slide = {
 		//this.addSwipe();
 	},
 	slideTo:function(target){
-		//requestAnimationFrame(()=>{
-			this.slider.style.transform = 'translateX(-'+(100*this.activeIndex())+'%)';
-			//this.scrollLeft = 0; // prevent "focus-scroll"?
-		//});
+		this.slider.style.transform = 'translateX(-'+(100*this.activeIndex())+'%)';
 	},
 }
 // fade (entirely done by css)
