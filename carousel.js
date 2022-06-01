@@ -5,8 +5,7 @@ class u1Carousel extends HTMLElement {
 		super();
 
 		let shadowRoot = this.attachShadow({mode:'open'});
-
-		var svg = '<svg viewBox="0 0 9 18" width="9" height="18"><path d="M1 1l7 8-7 8"/></svg>';
+		const svg = '<svg viewBox="0 0 9 18" width="9" height="18"><path d="M1 1l7 8-7 8"/></svg>';
 
 		shadowRoot.innerHTML = `
 		<style>
