@@ -112,7 +112,7 @@ class u1Carousel extends HTMLElement {
 		<button part="control prev" class="-arrow -prev" aria-label="previous slide">
 			<slot name=prev>${svg}</slot>
 		</button>
-		<slot class=body></slot>
+		<slot class=body tabindex=-1></slot>
 		<button part="control next" class="-arrow -next" aria-label="next slide">
 			<slot name=next>${svg}</slot>
 		</button>
