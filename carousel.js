@@ -14,18 +14,18 @@ class u1Carousel extends HTMLElement {
 				contain: layout;
 			}
 			:host .-arrow {
-				position: absolute;
+				position:absolute;
 				padding:1rem;
-				top: 0;
-				bottom: 0;
+				top:0;
+				bottom:0;
 				display:flex;
-				cursor: pointer;
-				border:none;
+				cursor:pointer;
+				border:0;
 				background:none;
-				user-select: none;
+				user-select:none;
 				width:auto;
-				z-index: 1;
-				align-items: center;
+				z-index:1;
+				align-items:center;
 				flex:0 0 auto; /* grow if controls are static */
 				stroke-linejoin:round;
 				stroke-linecap:round;
