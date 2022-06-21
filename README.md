@@ -1,7 +1,7 @@
-# &lt;u1-carousel&gt;
-Carousel-Component
+# &lt;u1-carousel&gt; - element
+Simple carousel component
 
-# Features
+## Features
 
 - css only fallback
 - no unnecessary css, style it yourself!
@@ -12,22 +12,38 @@ Carousel-Component
 - 3 Modes (slide, scroll, fade)
 - light-weight
 
-# Ussage
+## Ussage
 
 ```html
-<link rel=stylesheet href="../carousel.css">
-<script src="../carousel.js" type=module></script>
-
-<u1-carousel mode=slide play style="--u1-carousel-slideshow-speed:2s" tabindex="0">
-    <img src="myCat.jpg">
-    <img src="myCat2.jpg">
-    <img src="myCat3.jpg">
+<u1-carousel autoplay controls>
+    <div>Item 1</div>
+    <div>Item 2</div>
 </u1-carousel>
 ```
 
 ## Demos
+
+https://raw.githack.com/u1ui/carousel.el/main/tests/experiments.html  
+https://raw.githack.com/u1ui/carousel.el/main/tests/minimal.html  
+https://raw.githack.com/u1ui/carousel.el/main/tests/nested.html  
+https://raw.githack.com/u1ui/carousel.el/main/tests/test.html
+
+## Install
+
+```html
+<link href="https://cdn.jsdelivr.net/gh/u1ui/carousel.el@3.0.0/carousel.min.css" rel=stylesheet>
+<script src="https://cdn.jsdelivr.net/gh/u1ui/carousel.el@3.0.0/carousel.min.js" type=module>
+```
+
+## Demo
+
 https://raw.githack.com/u1ui/carousel.el/main/tests/experiments.html  
 https://raw.githack.com/u1ui/carousel.el/main/tests/minimal.html  
 https://raw.githack.com/u1ui/carousel.el/main/tests/nested.html  
 https://raw.githack.com/u1ui/carousel.el/main/tests/test.html  
+
+## About
+
+- MIT License, Copyright (c) 2022 <u1> (like all repositories in this organization) <br>
+- Suggestions, ideas, finding bugs and making pull requests make us very happy. ♥
 
