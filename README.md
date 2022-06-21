@@ -26,7 +26,7 @@ Simple carousel component
 https://raw.githack.com/u1ui/carousel.el/main/tests/experiments.html  
 https://raw.githack.com/u1ui/carousel.el/main/tests/minimal.html  
 https://raw.githack.com/u1ui/carousel.el/main/tests/nested.html  
-https://raw.githack.com/u1ui/carousel.el/main/tests/test.html
+https://raw.githack.com/u1ui/carousel.el/main/tests/test.html  
 
 ## Install
 
@@ -34,13 +34,6 @@ https://raw.githack.com/u1ui/carousel.el/main/tests/test.html
 <link href="https://cdn.jsdelivr.net/gh/u1ui/carousel.el@3.0.0/carousel.min.css" rel=stylesheet>
 <script src="https://cdn.jsdelivr.net/gh/u1ui/carousel.el@3.0.0/carousel.min.js" type=module>
 ```
-
-## Demo
-
-https://raw.githack.com/u1ui/carousel.el/main/tests/experiments.html  
-https://raw.githack.com/u1ui/carousel.el/main/tests/minimal.html  
-https://raw.githack.com/u1ui/carousel.el/main/tests/nested.html  
-https://raw.githack.com/u1ui/carousel.el/main/tests/test.html  
 
 ## About
 
