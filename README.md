@@ -21,6 +21,16 @@ Simple carousel component
 </u1-carousel>
 ```
 
+```css
+u1-carousel {
+    background:var(--color-light);
+}
+u1-carousel > :not([slot]) {
+    padding:3rem;
+    text-align:center;
+}
+```
+
 ## Install
 
 ```html
@@ -30,10 +40,10 @@ Simple carousel component
 
 ## Demos
 
-[experiments.html](https://raw.githack.com/u1ui/carousel.el/main/tests/experiments.html)  
-[minimal.html](https://raw.githack.com/u1ui/carousel.el/main/tests/minimal.html)  
-[nested.html](https://raw.githack.com/u1ui/carousel.el/main/tests/nested.html)  
-[test.html](https://raw.githack.com/u1ui/carousel.el/main/tests/test.html)  
+[experiments.html](http://gcdn.li/u1ui/carousel.el@main/tests/experiments.html)  
+[minimal.html](http://gcdn.li/u1ui/carousel.el@main/tests/minimal.html)  
+[nested.html](http://gcdn.li/u1ui/carousel.el@main/tests/nested.html)  
+[test.html](http://gcdn.li/u1ui/carousel.el@main/tests/test.html)  
 
 ## About
 
