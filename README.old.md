@@ -18,7 +18,7 @@ Carousel-Component
 <link rel=stylesheet href="../carousel.css">
 <script src="../carousel.js" type=module></script>
 
-<u1-carousel mode=slide play style="--u1-carousel-slideshow-speed:2s" tabindex="0">
+<u1-carousel mode=slide autoplay style="--u1-carousel-slideshow-speed:2s" tabindex="0">
     <img src="myCat.jpg">
     <img src="myCat2.jpg">
     <img src="myCat3.jpg">
@@ -30,4 +30,3 @@ https://raw.githack.com/u1ui/carousel.el/main/tests/experiments.html
 https://raw.githack.com/u1ui/carousel.el/main/tests/minimal.html  
 https://raw.githack.com/u1ui/carousel.el/main/tests/nested.html  
 https://raw.githack.com/u1ui/carousel.el/main/tests/test.html  
-

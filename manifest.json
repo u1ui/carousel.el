@@ -26,7 +26,7 @@
                     ],
                     "attributes": [
                         {
-                            "name": "play",
+                            "name": "autoplay",
                             "u1-type": "boolean"
                         },
                         {

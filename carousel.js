@@ -1,7 +1,7 @@
 // todo add privet fields
 /* element */
 class u1Carousel extends HTMLElement {
-		constructor() {
+	constructor() {
 		super();
 
 		let shadowRoot = this.attachShadow({mode:'open'});
@@ -126,24 +126,20 @@ class u1Carousel extends HTMLElement {
 
 		this.mode = this.getAttribute('mode');
 
-		var prev = this.shadowRoot.querySelector('.-prev');
-		var next = this.shadowRoot.querySelector('.-next');
+		const prev = this.shadowRoot.querySelector('.-prev');
+		const next = this.shadowRoot.querySelector('.-next');
 		next.addEventListener('click',()=>this.next());
 		prev.addEventListener('click',()=>this.prev());
 
 	}
 	static get observedAttributes() {
-		return ['play', 'mode'/*, 'tabindex'*/];
+		return ['play', 'autoplay', 'mode'/*, 'tabindex'*/]; // zzz "play"
 	}
 	attributeChangedCallback(name, oldValue, newValue) {
 		if (oldValue === newValue) return;
-		if (name === 'play') {
-			let play = this.hasAttribute('play');
-			this[play?'play':'stop']();
-		}
-		if (name === 'mode') {
-			this.mode = newValue;
-		}
+		if (name === 'play') { console.warn('play is deprecated, use autoplay'); let play = this.hasAttribute('play'); this[play?'play':'stop'](); }  // zzz
+		if (name === 'autoplay') this[newValue===null?'stop':'play']();
+		if (name === 'mode') this.mode = newValue;
 	}
 	set mode(mode){
 		if (!u1Carousel.mode[mode]) mode = 'slide';
@@ -213,7 +209,7 @@ class u1Carousel extends HTMLElement {
 
 		let speed = this.customProperty('slideshow-speed');
 		if (speed==='') speed = '6000';
-		var unit = speed.match(/[^0-9]*$/)[0];
+		const unit = speed.match(/[^0-9]*$/)[0];
 		speed = parseFloat(speed);
 		if (unit === 's') speed *= 1000;
 
@@ -286,22 +282,21 @@ customElements.define('u1-carousel', u1Carousel)
 // slide on target
 function hashchange(){
 	if (!location.hash) return;
-	var el = document.getElementById(location.hash.substr(1));
+	const el = document.getElementById(location.hash.substr(1));
 	if (!el) return;
-	var slide = el.closest('u1-carousel > *');
+	const slide = el.closest('u1-carousel > *');
 	if (!slide) return;
-	var sliderEl = slide.parentElement;
+	const sliderEl = slide.parentElement;
 	sliderEl.slideTo(slide);
 }
 addEventListener('DOMContentLoaded', hashchange);
 addEventListener('hashchange', hashchange);
 // slide on focus
 addEventListener('focusin', e=>{
-	let el = document.activeElement;
-	//if (!el) return;
-	var slide = el.closest('u1-carousel > *');
+	const el = document.activeElement;
+	const slide = el.closest('u1-carousel > *');
 	if (!slide) return;
-	var sliderEl = slide.parentElement;
+	const sliderEl = slide.parentElement;
 	sliderEl.slideTo(slide);
 });
 // keyboard nav
@@ -311,8 +306,12 @@ addEventListener('keydown', ({target,code})=>{
 	if (code === 'ArrowLeft')  target.prev();
 });
 
-
-
+/* sync */
+addEventListener('u1-carousel.slide', e=>{
+	const group = e.detail.slider.getAttribute('sync');
+	group && document.querySelectorAll('u1-carousel[sync="'+group+'"]').forEach( el => el.slideTo(e.detail.index) );
+});
+/*  */
 
 /*
 u1Carousel.prototype.addSwipe = function(){

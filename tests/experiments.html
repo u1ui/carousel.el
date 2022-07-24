@@ -41,7 +41,7 @@
         <h2>Change attributes:</h2>
 
         <label>
-            toggle play <input type=checkbox onclick="ss.toggleAttribute('play', this.checked)">
+            toggle autoplay <input type=checkbox onclick="ss.toggleAttribute('autoplay', this.checked)">
         </label>
 
         <form onchange="ss.setAttribute('mode', this.elements.mode.value)">
@@ -60,7 +60,7 @@
 
         <br>
 
-        <u1-carousel id=ss mode=slide play style="--u1-carousel-slideshow-speed:2s;" tabindex="0">
+        <u1-carousel id=ss mode=slide autoplay style="--u1-carousel-slideshow-speed:2s;" tabindex="0">
             <img src="https://picsum.photos/500/200?random=1" width="500" height="200" alt="picsum">
             <img src="https://picsum.photos/500/200?random=2" width="500" height="200" alt="picsum">
             <img src="https://picsum.photos/500/200?random=3" width="500" height="200" alt="picsum">
