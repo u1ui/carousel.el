@@ -34,8 +34,8 @@ u1-carousel > :not([slot]) {
 ## Install
 
 ```html
-<link href="https://cdn.jsdelivr.net/gh/u1ui/carousel.el@3.0.1/carousel.min.css" rel=stylesheet>
-<script src="https://cdn.jsdelivr.net/gh/u1ui/carousel.el@3.0.1/carousel.min.js" type=module>
+<link href="https://cdn.jsdelivr.net/gh/u1ui/carousel.el@x.x.x/carousel.min.css" rel=stylesheet>
+<script src="https://cdn.jsdelivr.net/gh/u1ui/carousel.el@x.x.x/carousel.min.js" type=module>
 ```
 
 ## Demos
