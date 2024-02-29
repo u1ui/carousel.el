@@ -282,7 +282,7 @@ customElements.define('u1-carousel', u1Carousel)
 // slide on target
 function hashchange(){
 	if (!location.hash) return;
-	const el = document.getElementById(location.hash.substr(1));
+	const el = document.getElementById(location.hash.substring(1));
 	if (!el) return;
 	const slide = el.closest('u1-carousel > *');
 	if (!slide) return;
