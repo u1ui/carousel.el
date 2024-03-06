@@ -12,7 +12,7 @@ Simple carousel component
 - 3 Modes (slide, scroll, fade)
 - light-weight
 
-## Ussage
+## Usage
 
 ```html
 <u1-carousel autoplay controls>
@@ -35,7 +35,7 @@ u1-carousel > :not([slot]) {
 
 ```html
 <link href="https://cdn.jsdelivr.net/gh/u1ui/carousel.el@x.x.x/carousel.min.css" rel=stylesheet>
-<script src="https://cdn.jsdelivr.net/gh/u1ui/carousel.el@x.x.x/carousel.min.js" type=module>
+<script src="https://cdn.jsdelivr.net/gh/u1ui/carousel.el@x.x.x/carousel.min.js" type=module></script>
 ```
 
 ## Demos
